@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "MuktaVaani";
+  src: url("./assets/fonts/MuktaVaani-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MuktaVaani-ExtraLight";
+  src: url("./assets/fonts/MuktaVaani-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  body {
+    @apply m-0 min-w-[320px] min-h-screen antialiased;
+    font-family: "MuktaVaani", sans-serif;
+  }
+
+  * {
+    font-family: "MuktaVaani", sans-serif;
+  }
+
+  a {
+    @apply font-medium no-underline;
+  }
+
+  button {
+    @apply rounded-lg border border-transparent px-5 py-2.5 text-base font-medium cursor-pointer transition-colors;
+  }
+
+  button:hover {
+    @apply border-blue-500;
+  }
+
+  button:focus,
+  button:focus-visible {
+    @apply outline-4 outline-blue-500;
+  }
+}
+.tox {
+  z-index: 10000 !important;
+}
