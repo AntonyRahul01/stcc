@@ -1,6 +1,7 @@
 // News and Events service to manage news and events via API
 
-const API_BASE_URL = "http://localhost:3000/api";
+// const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "http://192.168.1.2:3000/api";
 
 // Get authentication token
 const getAuthToken = () => {
@@ -139,6 +140,63 @@ export const deleteNewsAndEvent = async (id) => {
     return data;
   } catch (error) {
     console.error("Error deleting news/event:", error);
+    throw error;
+  }
+};
+
+// Get public news and events with pagination (for user side)
+export const getPublicNewsAndEvents = async (page = 1, limit = 10) => {
+  try {
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+
+    const response = await fetch(
+      `${API_BASE_URL}/news-and-events/public?${queryParams}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch news and events");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching public news and events:", error);
+    throw error;
+  }
+};
+
+// Get a single public news/event by ID (for user side)
+export const getPublicNewsAndEventById = async (id) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/news-and-events/public/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch news/event");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching public news/event:", error);
     throw error;
   }
 };

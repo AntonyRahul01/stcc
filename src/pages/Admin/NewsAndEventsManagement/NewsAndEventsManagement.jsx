@@ -20,6 +20,7 @@ import {
   deleteNewsAndEvent,
 } from "../../../utils/newsAndEventsService";
 import { getCategories } from "../../../utils/categoryService";
+import { getCoverImageUrl, getImagesUrls } from "../../../utils/imageUtils";
 import { Editor } from "@tinymce/tinymce-react";
 
 // Simple Rich Text Editor Component
@@ -564,7 +565,7 @@ const NewsAndEventsManagement = () => {
                         <div className="flex items-center gap-2">
                           {item.cover_image && (
                             <img
-                              src={item.cover_image}
+                              src={getCoverImageUrl(item.cover_image)}
                               alt={item.title}
                               className="w-10 h-10 rounded-lg object-cover"
                               onError={(e) => {
@@ -598,17 +599,19 @@ const NewsAndEventsManagement = () => {
                           Array.isArray(item.images) &&
                           item.images.length > 0 ? (
                             <div className="flex -space-x-2">
-                              {item.images.slice(0, 3).map((img, idx) => (
-                                <img
-                                  key={idx}
-                                  src={img}
-                                  alt={`Image ${idx + 1}`}
-                                  className="w-8 h-8 rounded border-2 border-white object-cover"
-                                  onError={(e) => {
-                                    e.target.style.display = "none";
-                                  }}
-                                />
-                              ))}
+                              {getImagesUrls(item.images)
+                                .slice(0, 3)
+                                .map((img, idx) => (
+                                  <img
+                                    key={idx}
+                                    src={img}
+                                    alt={`Image ${idx + 1}`}
+                                    className="w-8 h-8 rounded border-2 border-white object-cover"
+                                    onError={(e) => {
+                                      e.target.style.display = "none";
+                                    }}
+                                  />
+                                ))}
                               {item.images.length > 3 && (
                                 <div className="w-8 h-8 rounded border-2 border-white bg-gray-100 flex items-center justify-center text-xs text-gray-600 font-semibold">
                                   +{item.images.length - 3}
@@ -1213,7 +1216,7 @@ const NewsAndEventsManagement = () => {
                   </label>
                   <div className="rounded-lg overflow-hidden border border-gray-200">
                     <img
-                      src={viewingItem.cover_image}
+                      src={getCoverImageUrl(viewingItem.cover_image)}
                       alt={viewingItem.title}
                       className="w-full h-64 object-cover"
                       onError={(e) => {
@@ -1312,7 +1315,7 @@ const NewsAndEventsManagement = () => {
                       Additional Images ({viewingItem.images.length})
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {viewingItem.images.map((img, index) => (
+                      {getImagesUrls(viewingItem.images).map((img, index) => (
                         <div
                           key={index}
                           className="relative group rounded-lg overflow-hidden border border-gray-200"

@@ -1,6 +1,7 @@
 // Category service to manage categories via API
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://192.168.1.2:3000/api';
 
 // Get authentication token
 const getAuthToken = () => {
