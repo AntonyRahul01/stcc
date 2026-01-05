@@ -1,8 +1,5 @@
 // Image utility functions for handling image URLs
-
-// Base URL for images
-// export const IMAGE_BASE_URL = "http://localhost:3000/public/uploads";
-export const IMAGE_BASE_URL = "http://192.168.1.2:3000/public/uploads";
+import { IMAGE_BASE_URL } from "../config/api";
 
 /**
  * Get full image URL

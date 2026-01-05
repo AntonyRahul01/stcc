@@ -1,45 +1,68 @@
-import { useState } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { LogOut, Newspaper, Tag, Menu, X, LayoutDashboard, User } from 'lucide-react';
-import NewsAndEventsManagement from '../NewsAndEventsManagement/NewsAndEventsManagement';
-import CategoriesManagement from '../CategoriesManagement/CategoriesManagement';
+import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import {
+  LogOut,
+  Newspaper,
+  Tag,
+  Menu,
+  X,
+  LayoutDashboard,
+  User,
+  Calendar,
+  Home,
+} from "lucide-react";
+import NewsAndEventsManagement from "../NewsAndEventsManagement/NewsAndEventsManagement";
+import CategoriesManagement from "../CategoriesManagement/CategoriesManagement";
+import UpcomingEventsManagement from "../UpcomingEventsManagement/UpcomingEventsManagement";
+import FinancialAidManagement from "../FinancialAidManagement/FinancialAidManagement";
+import AnnualEventsManagement from "../AnnualEventsManagement/AnnualEventsManagement";
 
 const Dashboard = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('news-and-events');
+  const [activeSection, setActiveSection] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleLogout = () => {
     logout();
-    navigate('/admin/login');
+    navigate("/admin/login");
   };
 
   const menuItems = [
-    { id: 'news-and-events', label: 'News & Events', icon: Newspaper },
-    { id: 'categories', label: 'Categories', icon: Tag },
+    { id: "home", label: "Home", icon: Home },
+    { id: "news-and-events", label: "News & Events", icon: Newspaper },
+    { id: "upcoming-events", label: "Upcoming Events", icon: Calendar },
+    { id: "categories", label: "Categories", icon: Tag },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
       {/* Top Navigation Bar */}
-      <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+      <header className="bg-white border-b border-gray-200 shadow-sm flex-shrink-0 z-40 h-16">
+        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
             >
-              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {sidebarOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center justify-center w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg">
                 <LayoutDashboard className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900">Admin Dashboard</h1>
-                <p className="hidden sm:block text-xs text-gray-500">Content Management System</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">
+                  Admin Dashboard
+                </h1>
+                <p className="hidden sm:block text-xs text-gray-500">
+                  Content Management System
+                </p>
               </div>
             </div>
           </div>
@@ -59,14 +82,14 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`bg-white border-r border-gray-200 transition-all duration-300 ${
-            sidebarOpen ? 'w-64' : 'w-0'
-          } overflow-hidden ${sidebarOpen ? 'block' : 'hidden'} lg:block shadow-sm`}
+          className={`bg-white border-r border-gray-200 transition-all duration-300 flex-shrink-0 h-full ${
+            sidebarOpen ? "w-64" : "w-0"
+          } ${sidebarOpen ? "block" : "hidden"} lg:block lg:w-64 shadow-sm`}
         >
-          <nav className="p-4 space-y-1">
+          <nav className="p-4 space-y-1 h-full">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -76,12 +99,18 @@ const Dashboard = () => {
                   onClick={() => setActiveSection(item.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
                     isActive
-                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                      ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md"
+                      : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                   }`}
                 >
-                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                  <span className="text-sm">{item.label}</span>
+                  <Icon
+                    className={`w-5 h-5 flex-shrink-0 ${
+                      isActive ? "text-white" : "text-gray-500"
+                    }`}
+                  />
+                  <span className="text-sm whitespace-nowrap">
+                    {item.label}
+                  </span>
                 </button>
               );
             })}
@@ -89,10 +118,19 @@ const Dashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto">
-            {activeSection === 'news-and-events' && <NewsAndEventsManagement />}
-            {activeSection === 'categories' && <CategoriesManagement />}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto w-full">
+            {activeSection === "home" && (
+              <div className="space-y-8">
+                <FinancialAidManagement />
+                <AnnualEventsManagement />
+              </div>
+            )}
+            {activeSection === "news-and-events" && <NewsAndEventsManagement />}
+            {activeSection === "upcoming-events" && (
+              <UpcomingEventsManagement />
+            )}
+            {activeSection === "categories" && <CategoriesManagement />}
           </div>
         </main>
       </div>
@@ -101,4 +139,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

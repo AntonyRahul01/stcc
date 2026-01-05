@@ -45,9 +45,7 @@ const NewsSection = () => {
       location: item.location || "",
       image: getCoverImageUrl(item.cover_image),
       type: item.category_slug || (item.category_id === 1 ? "news" : "events"),
-      url: `/${
-        item.category_slug || (item.category_id === 1 ? "news" : "events")
-      }/${item.id}`,
+      url: `/news/${item.id}`, // Unified URL for both news and events
     }));
   };
 
@@ -237,10 +235,10 @@ const NewsSection = () => {
                     </h3>
 
                     {/* Location */}
-                    <div className="flex items-center gap-2 text-[18px] text-[#FF0000] mb-5">
+                    {/* <div className="flex items-center gap-2 text-[18px] text-[#FF0000] mb-5">
                       <MapPin className="w-5 h-5" />
                       <span className="font-[400]">{item.location}</span>
-                    </div>
+                    </div> */}
 
                     {/* Read More */}
                     <div className="inline-flex items-center gap-1 text-[14px] text-[#002E90] font-[400]">
@@ -256,19 +254,15 @@ const NewsSection = () => {
 
         {/* View All Button */}
         <div className="text-center" data-aos="fade-up" data-aos-delay="300">
-          <button
+          <Link
+            to="/news"
             onClick={() => {
-              if (hasMore && !isLoadingMore) {
-                fetchNewsAndEvents(currentPage + 1, 6, true);
-              }
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            disabled={!hasMore || isLoadingMore}
-            className={`bg-[#FF0000] text-white px-10 py-3.5 rounded-full text-base font-medium hover:bg-red-700 transition-colors border-0 focus:outline-none focus:ring-0 ${
-              !hasMore || isLoadingMore ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className="inline-block bg-[#FF0000] text-white px-10 py-3.5 rounded-full text-base font-medium hover:bg-red-700 transition-colors border-0 focus:outline-none focus:ring-0"
           >
-            {isLoadingMore ? "ஏற்றுகிறது..." : "அனைத்தையும் காண்க"}
-          </button>
+            அனைத்தையும் காண்க
+          </Link>
         </div>
       </div>
     </div>

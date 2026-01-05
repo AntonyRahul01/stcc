@@ -3,7 +3,7 @@ import Layout from "./components/Layout/Layout";
 import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import Home from "./pages/Home/Home";
 import News from "./pages/News/News";
-import NewsDetail from "./pages/NewsDetail/NewsDetail";
+import NewsAndEventsDetail from "./pages/NewsAndEventsDetail/NewsAndEventsDetail";
 import Events from "./pages/Events/Events";
 import EventDetail from "./pages/EventDetail/EventDetail";
 import Help from "./pages/Help/Help";
@@ -36,7 +36,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/news" element={<News />} />
-              <Route path="/news/:id" element={<NewsDetail />} />
+              <Route path="/news/:id" element={<NewsAndEventsDetail />} />
               <Route path="/events" element={<Events />} />
               <Route path="/events/:id" element={<EventDetail />} />
               <Route path="/help" element={<Help />} />

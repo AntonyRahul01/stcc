@@ -19,8 +19,18 @@ const Header = () => {
 
   useEffect(() => {
     const updateDateTime = () => {
-      // Get current GMT/UTC time using moment
-      const gmtMoment = moment.utc();
+      // Get current GMT/UTC time and add Switzerland timezone offset
+      // Switzerland is GMT+1 (CET) or GMT+2 (CEST during daylight saving)
+      // This automatically handles daylight saving time based on the current date
+      const now = new Date();
+      const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
+      // Switzerland timezone offset: +1 hour (3600000 ms) or +2 hours during DST
+      // Check if DST is active (roughly March-October)
+      const currentMonth = now.getUTCMonth(); // 0-11
+      const isDST = currentMonth >= 2 && currentMonth <= 9; // March (2) to October (9)
+      const swissOffset = isDST ? 7200000 : 3600000; // +2 hours or +1 hour
+      const swissTime = new Date(utcTime + swissOffset);
+      const swissMoment = moment(swissTime);
 
       // Tamil day names
       const tamilDays = [
@@ -47,11 +57,11 @@ const Header = () => {
         "டிசம்பர்",
       ];
 
-      const dayIndex = gmtMoment.day();
+      const dayIndex = swissMoment.day();
       const day = tamilDays[dayIndex];
-      const date = gmtMoment.date();
-      const month = gmtMoment.month() + 1; // 1-12
-      const year = gmtMoment.year();
+      const date = swissMoment.date();
+      const month = swissMoment.month() + 1; // 1-12
+      const year = swissMoment.year();
 
       // Format date: "27.12.2025 சனி" (DD.MM.YYYY with Tamil day)
       const formattedDate = `${String(date).padStart(2, "0")}.${String(
@@ -59,7 +69,7 @@ const Header = () => {
       ).padStart(2, "0")}.${year} ${day}`;
 
       // Format time in 12-hour format with AM/PM
-      const formattedTime = gmtMoment.format("hh:mm:ss A");
+      const formattedTime = swissMoment.format("hh:mm:ss A");
 
       setCurrentDateTime({
         date: formattedDate,
@@ -116,7 +126,7 @@ const Header = () => {
             <img
               src={mailIcon}
               alt="Mail"
-              className="w-3.5 h-3.5 sm:w-4 sm:h-5 brightness-0 invert flex-shrink-0"
+              className="w-4 h-4 sm:w-5 sm:h-5 brightness-0 invert flex-shrink-0 object-contain"
             />
             <span className="text-[10px] sm:text-xs md:text-[14px] font-[400] whitespace-nowrap">
               email: info@tccswiss.org
