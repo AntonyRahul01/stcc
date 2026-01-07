@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import ProtectedRoute from "./components/Admin/ProtectedRoute";
 import Home from "./pages/Home/Home";
@@ -15,6 +15,9 @@ import "./App.css";
 function App() {
   return (
     <Routes>
+      {/* Admin Redirect */}
+      <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+
       {/* Public Routes */}
       <Route path="/admin/login" element={<Login />} />
 

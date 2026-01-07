@@ -27,10 +27,10 @@ const FinancialAidSection = () => {
   useEffect(() => {
     // Refresh AOS when data changes
     if (data) {
-      const timer = setTimeout(() => {
-        AOS.refresh();
-      }, 50);
-      return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      AOS.refresh();
+    }, 50);
+    return () => clearTimeout(timer);
     }
   }, [data]);
 
@@ -62,28 +62,28 @@ const FinancialAidSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {/* Card 1 */}
           {data.card1 && (
-            <div
-              className="rounded-lg border border-white p-4 sm:p-6 md:p-8"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              {/* Icon */}
-              <div className="flex justify-center mb-4 sm:mb-6">
-                <Handshake className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white stroke-2" />
-              </div>
+          <div
+            className="rounded-lg border border-white p-4 sm:p-6 md:p-8"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            {/* Icon */}
+            <div className="flex justify-center mb-4 sm:mb-6">
+              <Handshake className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white stroke-2" />
+            </div>
 
-              {/* Amount */}
-              <div className="text-center mb-4">
-                <div
-                  className="text-3xl sm:text-4xl md:text-5xl text-white mb-2"
+            {/* Amount */}
+            <div className="text-center mb-4">
+              <div
+                className="text-3xl sm:text-4xl md:text-5xl text-white mb-2"
                   style={{
                     fontFamily: "MuktaVaani-ExtraLight",
                     fontWeight: 200,
                   }}
-                >
+              >
                   {data.card1.amount}
-                </div>
-                <div className="text-sm sm:text-base md:text-lg text-white font-[400]">
+              </div>
+              <div className="text-sm sm:text-base md:text-lg text-white font-[400]">
                   {data.card1.label}
                 </div>
               </div>
@@ -92,28 +92,28 @@ const FinancialAidSection = () => {
 
           {/* Card 2 */}
           {data.card2 && (
-            <div
-              className="rounded-lg border border-white p-4 sm:p-6 md:p-8"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              {/* Icon */}
-              <div className="flex justify-center mb-4 sm:mb-6">
-                <Handshake className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white stroke-2" />
-              </div>
+          <div
+            className="rounded-lg border border-white p-4 sm:p-6 md:p-8"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            {/* Icon */}
+            <div className="flex justify-center mb-4 sm:mb-6">
+              <Handshake className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white stroke-2" />
+            </div>
 
-              {/* Amount */}
-              <div className="text-center mb-4">
-                <div
-                  className="text-3xl sm:text-4xl md:text-5xl text-white mb-2"
+            {/* Amount */}
+            <div className="text-center mb-4">
+              <div
+                className="text-3xl sm:text-4xl md:text-5xl text-white mb-2"
                   style={{
                     fontFamily: "MuktaVaani-ExtraLight",
                     fontWeight: 200,
                   }}
-                >
+              >
                   {data.card2.amount}
-                </div>
-                <div className="text-sm sm:text-base md:text-lg text-white font-[400]">
+              </div>
+              <div className="text-sm sm:text-base md:text-lg text-white font-[400]">
                   {data.card2.label}
                 </div>
               </div>

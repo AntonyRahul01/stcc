@@ -1,8 +1,26 @@
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { isTokenExpired } from "../../utils/tokenUtils";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, validateToken, logout } = useAuth();
+
+  // Validate token on mount and when route changes
+  useEffect(() => {
+    if (!isLoading) {
+      const token = localStorage.getItem("admin_token");
+
+      // Check if token exists and is not expired
+      if (token && isTokenExpired(token)) {
+        // Token is expired, logout and redirect
+        logout();
+      } else {
+        // Validate token state
+        validateToken();
+      }
+    }
+  }, [isLoading, validateToken, logout]);
 
   if (isLoading) {
     return (
@@ -20,4 +38,3 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default ProtectedRoute;
-

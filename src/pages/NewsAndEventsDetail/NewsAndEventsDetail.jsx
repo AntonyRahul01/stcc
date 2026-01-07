@@ -181,10 +181,12 @@ const NewsAndEventsDetail = () => {
               </Link>
               <span className="text-black">{">"}</span>
               <Link
-                to="/news"
+                to={item?.type === "community-fund" ? "/help" : "/news"}
                 className="text-black hover:text-[#FF0000] transition-colors"
               >
-                செய்திகள்
+                {item?.type === "community-fund"
+                  ? "உறவுக்கு கைகொடுப்போம்"
+                  : "செய்திகள்"}
               </Link>
               <span className="text-black">{">"}</span>
               <span className="text-[#FF0000] font-[400] truncate">
@@ -200,7 +202,7 @@ const NewsAndEventsDetail = () => {
               <div className="flex items-center justify-between mb-4">
                 {/* Category Badge */}
                 <div className="bg-[#FF0000] text-white px-4 py-2 rounded-lg text-[14px] font-[400]">
-                  {item.category}
+                  {item.type === "community-fund" ? "செய்திகள்" : item.category}
                 </div>
 
                 {/* Date */}
@@ -303,9 +305,10 @@ const NewsAndEventsDetail = () => {
             <div className="lg:col-span-1">
               <div className="sticky top-8">
                 <h2 className="text-[24px] font-[700] text-black mb-6">
-                  {item.type === "news"
+                  {/* {item.type === "news"
                     ? "பரிந்துரைக்கப்பட்ட நிகழ்வுகள்"
-                    : "பரிந்துரைக்கப்பட்ட செய்திகள்"}
+                    : "பரிந்துரைக்கப்பட்ட செய்திகள்"} */}
+                  பரிந்துரைக்கப்பட்ட நிகழ்வுகள்
                 </h2>
 
                 {recommendedItems.length > 0 ? (
@@ -332,7 +335,9 @@ const NewsAndEventsDetail = () => {
                           {/* Category + Date */}
                           <div className="flex items-center justify-between mb-4">
                             <span className="bg-[#FF0000] text-white text-[12px] font-[400] px-4 py-2 rounded-lg">
-                              {recommendedItem.category}
+                              {recommendedItem.type === "community-fund"
+                                ? "செய்திகள்"
+                                : recommendedItem.category}
                             </span>
                             <div className="flex items-center gap-2 text-[16px] text-gray-800">
                               <CalendarDays className="w-5 h-5" />
@@ -415,7 +420,9 @@ const NewsAndEventsDetail = () => {
                       {/* Category + Date */}
                       <div className="flex items-center justify-between mb-4">
                         <span className="bg-[#FF0000] text-white text-[12px] font-[400] px-4 py-2 rounded-lg">
-                          {relatedItem.category}
+                          {relatedItem.type === "community-fund"
+                            ? "செய்திகள்"
+                            : relatedItem.category}
                         </span>
                         <div className="flex items-center gap-2 text-[16px] text-gray-800">
                           <CalendarDays className="w-5 h-5" />

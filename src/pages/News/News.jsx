@@ -162,7 +162,9 @@ const News = () => {
                     {/* Category + Date */}
                     <div className="flex items-center justify-between mb-4">
                       <span className="bg-[#FF0000] text-white text-[12px] font-[400] px-4 py-2 rounded-lg">
-                        {item.category}
+                        {item.type === "community-fund"
+                          ? "செய்திகள்"
+                          : item.category}
                       </span>
                       <div className="flex items-center gap-2 text-[16px] text-gray-800">
                         <CalendarDays className="w-5 h-5" />

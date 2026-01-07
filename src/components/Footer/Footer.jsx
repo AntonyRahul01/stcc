@@ -1,38 +1,80 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import logoImage from "../../assets/images/logo.png";
 import facebookIcon from "../../assets/images/facebook.svg";
 import whatsappIcon from "../../assets/images/whatsapp.svg";
 import instagramIcon from "../../assets/images/instagram.svg";
-import footerBanner from "../../assets/images/footerbanner.webp";
+import { getPublicFooterBanner } from "../../utils/footerBannerService";
+import { getImageUrl } from "../../utils/imageUtils";
 
 const Footer = () => {
+  const [footerBanner, setFooterBanner] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch footer banner from API
   useEffect(() => {
-    // Refresh AOS when component mounts
+    const loadFooterBanner = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getPublicFooterBanner();
+        if (response.success && response.data && response.data.image) {
+          setFooterBanner(response.data);
+        } else {
+          setFooterBanner(null);
+        }
+      } catch (error) {
+        console.error("Error loading footer banner:", error);
+        setFooterBanner(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFooterBanner();
+  }, []);
+
+  useEffect(() => {
+    // Refresh AOS when component mounts or footer banner loads
     // Small delay to ensure DOM is updated
     const timer = setTimeout(() => {
       AOS.refresh();
     }, 50);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [footerBanner]);
 
   return (
     <footer className="w-full bg-white">
       {/* Footer Banner */}
-      <div
-        className="w-full overflow-hidden"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
-        <img
-          src={footerBanner}
-          alt="STCC Footer Banner"
-          className="w-full h-auto"
-          style={{ display: "block", maxWidth: "100%" }}
-        />
-      </div>
+      {isLoading ? (
+        <div
+          className="w-full overflow-hidden bg-gray-100 min-h-[200px] flex items-center justify-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+            <p className="mt-4 text-gray-500">Loading footer banner...</p>
+          </div>
+        </div>
+      ) : footerBanner && footerBanner.image ? (
+        <div
+          className="w-full overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <img
+            src={getImageUrl(footerBanner.image)}
+            alt="STCC Footer Banner"
+            className="w-full h-auto"
+            style={{ display: "block", maxWidth: "100%" }}
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
+          />
+        </div>
+      ) : null}
 
       {/* Welcome Text Section */}
       <div

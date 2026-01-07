@@ -11,12 +11,19 @@ import {
   User,
   Calendar,
   Home,
+  Mail,
 } from "lucide-react";
 import NewsAndEventsManagement from "../NewsAndEventsManagement/NewsAndEventsManagement";
 import CategoriesManagement from "../CategoriesManagement/CategoriesManagement";
 import UpcomingEventsManagement from "../UpcomingEventsManagement/UpcomingEventsManagement";
+import TopBannerManagement from "../TopBannerManagement/TopBannerManagement";
+import FooterBannerManagement from "../FooterBannerManagement/FooterBannerManagement";
+import LeaderBannerManagement from "../LeaderBannerManagement/LeaderBannerManagement";
+import BannerManagement from "../BannerManagement/BannerManagement";
+import QuotesManagement from "../QuotesManagement/QuotesManagement";
 import FinancialAidManagement from "../FinancialAidManagement/FinancialAidManagement";
 import AnnualEventsManagement from "../AnnualEventsManagement/AnnualEventsManagement";
+import ContactManagement from "../ContactManagement/ContactManagement";
 
 const Dashboard = () => {
   const { logout } = useAuth();
@@ -33,7 +40,8 @@ const Dashboard = () => {
     { id: "home", label: "Home", icon: Home },
     { id: "news-and-events", label: "News & Events", icon: Newspaper },
     { id: "upcoming-events", label: "Upcoming Events", icon: Calendar },
-    { id: "categories", label: "Categories", icon: Tag },
+    { id: "contacts", label: "Contacts", icon: Mail },
+    // { id: "categories", label: "Categories", icon: Tag },
   ];
 
   return (
@@ -122,6 +130,11 @@ const Dashboard = () => {
           <div className="max-w-7xl mx-auto w-full">
             {activeSection === "home" && (
               <div className="space-y-8">
+                <TopBannerManagement />
+                <FooterBannerManagement />
+                <LeaderBannerManagement />
+                <BannerManagement />
+                <QuotesManagement />
                 <FinancialAidManagement />
                 <AnnualEventsManagement />
               </div>
@@ -130,6 +143,7 @@ const Dashboard = () => {
             {activeSection === "upcoming-events" && (
               <UpcomingEventsManagement />
             )}
+            {activeSection === "contacts" && <ContactManagement />}
             {activeSection === "categories" && <CategoriesManagement />}
           </div>
         </main>
